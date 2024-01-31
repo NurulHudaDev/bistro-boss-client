@@ -13,27 +13,22 @@ const OderTab = ({ items }) => {
     };
 
     return (
-        <div className="grid md:grid-cols-3 gap-10">
-            {
-                items.map(item => <FoodCard
-                    key={item._id}
-                    item={item}
-                ></FoodCard>)
-            }
+        <div>
             <Swiper
                 pagination={pagination}
                 modules={[Pagination]}
                 className="mySwiper"
             >
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
-                <SwiperSlide>Slide 5</SwiperSlide>
-                <SwiperSlide>Slide 6</SwiperSlide>
-                <SwiperSlide>Slide 7</SwiperSlide>
-                <SwiperSlide>Slide 8</SwiperSlide>
-                <SwiperSlide>Slide 9</SwiperSlide>
+                <SwiperSlide>
+                    <div className="grid md:grid-cols-3 gap-10">
+                    {
+                        items.map(item => <FoodCard
+                            key={item._id}
+                            item={item}
+                        ></FoodCard>)
+                    }
+                    </div>
+                </SwiperSlide>
             </Swiper>
         </div>
 
