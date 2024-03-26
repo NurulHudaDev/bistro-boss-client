@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from "../../Providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 
@@ -11,6 +11,10 @@ const LogIn = () => {
     const [disabled, setDisabled] = useState(true);
 
     const { signIn } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -29,25 +33,26 @@ const LogIn = () => {
                 Swal.fire({
                     title: "User Login Successful",
                     showClass: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeInUp
                         animate__faster
                       `
                     },
                     hideClass: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeOutDown
                         animate__faster
                       `
                     }
-                  });
+                });
+                navigate(from, {replace: true});
             })
     }
 
     const handleValidateCaptcha = (e) => {
-        const user_captcha_value =e.target.value;
+        const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
         }
