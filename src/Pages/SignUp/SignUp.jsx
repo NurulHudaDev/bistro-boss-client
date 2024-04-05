@@ -3,10 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
 
 const SignUp = () => {
 
+    const axiosPublic = UseAxiosPublic();
     const {
         register,
         handleSubmit,
@@ -17,23 +19,30 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-         console.log(data) 
+      
          createUser(data.email, data.password)
          .then(result =>{
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            updateUserProfile(data.name, data.photoURL)
+            const userInfo = {
+                name: data.name,
+                email: data.email
+            }
+            axiosPublic.post('/users', userInfo)
+            .then(res =>{
+                if(res.data.inserteId){
+                    console.log('user added to the database')
+                    reset();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                      navigate('/');
+                }
+            })
             .then(() =>{
-                console.log('user profile info updated')
-                reset();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  navigate('/');
+                
             })
             .catch(error => console.log(error))
          })
@@ -98,6 +107,7 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="Sing Up" />
                             </div>
                         </form>
+                        <p className="px-6"><small>New Here? <Link to="/login">Log In</Link></small></p>
                     </div>
                 </div>
             </div>
