@@ -1,11 +1,11 @@
 import Swal from "sweetalert2";
-import useCart from "../../hooks/useCart";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import UseAxiosSecure from "../../hooks/UseAxiosSecure";
+import UseCart from "../../Hooks/UseCart";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 const Cart = () => {
 
-    const [cart, refetch] = useCart();
+    const [cart, refetch] = UseCart();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
     const axiosSecure = UseAxiosSecure();
 
