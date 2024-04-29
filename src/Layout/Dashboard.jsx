@@ -4,13 +4,14 @@ import UseCart from "../hooks/useCart";
 import { MdEmail } from "react-icons/md";
 import { FaUtensils } from "react-icons/fa";
 import { FaListUl } from "react-icons/fa";
+import UseAdmin from "../Hooks/UseAdmin";
 
 
 const Dashboard = () => {
 
     const [cart] = UseCart();
 
-    const isAdmin = true;
+    const isAdmin = UseAdmin();
 
     return (
         <div className="flex">
